@@ -1,11 +1,31 @@
 #!/usr/bin/env bash
-# Create a Cursor Cloud Agent task for this repo (https://cursor.com/docs/cloud-agent/api).
+# Create a Cursor Cloud Agent task (https://cursor.com/docs/cloud-agent/api).
 # Requires: export CURSOR_API_KEY from https://cursor.com/settings
+#
+# By default, prepends repository AGENTS.md into the prompt so the cloud agent
+# uses it as the project prompt. Set INCLUDE_AGENTS_MD=0 to skip.
 set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
 
 REPO="${REPO:-https://github.com/shahzebqazi/mastodon-client}"
 REF="${REF:-main}"
-PROMPT="${PROMPT:-Start a cloud session for mastodon-client. Confirm repository access and suggest a minimal first milestone (stack and scope) for a small Mastodon client.}"
+INCLUDE_AGENTS_MD="${INCLUDE_AGENTS_MD:-1}"
+
+BASE_PROMPT="${PROMPT:-You are the Cursor Cloud Agent for this repository. Implement the next milestone from AGENTS.md using a feature branch and PR. Read AGENTS.md first.}"
+
+if [[ "${INCLUDE_AGENTS_MD}" == "1" ]] && [[ -f "${ROOT}/AGENTS.md" ]]; then
+  PROMPT="${BASE_PROMPT}
+
+---
+
+## Repository prompt (AGENTS.md)
+
+$(cat "${ROOT}/AGENTS.md")"
+else
+  PROMPT="${BASE_PROMPT}"
+fi
 
 if [[ -z "${CURSOR_API_KEY:-}" ]]; then
   echo "Set CURSOR_API_KEY (from https://cursor.com/settings) and re-run." >&2

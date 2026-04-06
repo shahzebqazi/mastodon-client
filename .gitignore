@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Build / adapters
+.svelte-kit/
+dist/
+build/
+.vite/
+
+# Env and local secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+*.log
+
+# Test / coverage
+coverage/

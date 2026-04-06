@@ -1,0 +1,18 @@
+{
+  "$schema": "https://cursor.com/schemas/environment.schema.json",
+  "name": "mastodon-client",
+  "install": "if [ -f package.json ]; then if [ -f package-lock.json ]; then npm ci; elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm install; else npm install; fi; else echo 'No package.json yet — scaffold the app per AGENTS.md (Milestone 1).'; fi",
+  "terminals": [
+    {
+      "name": "dev",
+      "command": "sh -c 'if [ -f package.json ]; then exec npm run dev; else echo \"No package.json yet — complete Milestone 1 in AGENTS.md, then restart this terminal.\"; tail -f /dev/null; fi'",
+      "description": "Runs npm run dev after scaffold; blocks quietly until package.json exists."
+    }
+  ],
+  "ports": [
+    {
+      "name": "web",
+      "port": 5173
+    }
+  ]
+}

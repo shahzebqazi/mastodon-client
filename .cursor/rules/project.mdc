@@ -1,0 +1,10 @@
+---
+description: Canonical project prompt lives in AGENTS.md (Mastodon client, Cursor Cloud workflow).
+alwaysApply: true
+---
+
+# mastodon-client
+
+Follow the repository root **`AGENTS.md`** for product goals, stack, milestones, Git workflow, and Cursor Cloud Agent behavior. It is the single canonical prompt for this repo.
+
+When **AGENTS.md** conflicts with ad-hoc chat instructions, prefer **AGENTS.md** unless the user explicitly overrides for that session.

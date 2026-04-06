@@ -1,31 +1,61 @@
 # mastodon-client
 
-Public **Mastodon** web client, built with **Cursor** locally and **Cursor Cloud Agents** as the primary implementer. GitHub is the source of truth.
+A web client for [Mastodon](https://joinmastodon.org/) and compatible instances. You connect to an instance, sign in with OAuth, and use your home timeline and other features as they are implemented.
 
-## How this repo is meant to work
+## Requirements
 
-| Layer | Role |
-|-------|------|
-| **[`AGENTS.md`](./AGENTS.md)** | **Project prompt** — goals, stack (Svelte + TypeScript), milestones, Git rules, and cloud-agent workflow. Read this first. |
-| **[`.cursor/environment.json`](./.cursor/environment.json)** | Cursor Cloud **environment** — install + dev terminal + port **5173**. |
-| **[`.cursor/rules/project.mdc`](./.cursor/rules/project.mdc)** | Tells Cursor to treat `AGENTS.md` as canonical. |
-| **GitHub** | Public repo, branches, PRs, review. |
+- **Node.js** (LTS recommended) and **npm** (or **pnpm** if the repo ships a `pnpm-lock.yaml`)
 
-**Local:** Clone, install deps after scaffold, run `npm run dev`. Use the Cursor IDE for editing and review.
+## Setup
 
-**Cloud:** Start an agent from [cursor.com/agents](https://cursor.com/agents) against this repository. The agent should follow **`AGENTS.md`** on every run.
+1. Clone the repository:
 
-## Quick links
+   ```bash
+   git clone https://github.com/shahzebqazi/mastodon-client.git
+   cd mastodon-client
+   ```
 
-- Repo: [github.com/shahzebqazi/mastodon-client](https://github.com/shahzebqazi/mastodon-client)
-- Cloud agents dashboard: [cursor.com/agents](https://cursor.com/agents)
-- API key (for scripts / MCP): [cursor.com/settings](https://cursor.com/settings)
+2. Install dependencies:
 
-## Optional: create a cloud task from the CLI
+   ```bash
+   npm install
+   ```
 
-```bash
-export CURSOR_API_KEY="…"
-./scripts/create-cloud-agent.sh
-```
+3. Copy the environment template and fill in values for your instance and OAuth app:
 
-The script defaults to embedding **`AGENTS.md`** into the task prompt (`INCLUDE_AGENTS_MD=1`). Override the prompt with `PROMPT='…'`.
+   ```bash
+   cp .env.example .env
+   ```
+
+   Register an application on your Mastodon instance (**Preferences → Development → New application**). Set the redirect URI to match your local app (for example `http://localhost:5173/oauth/callback` if the dev server uses that port).
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+   Open the URL shown in the terminal (by default the app expects port **5173**).
+
+## Environment variables
+
+See **`.env.example`** for the exact names. Typical values:
+
+| Variable | Purpose |
+|----------|---------|
+| `PUBLIC_MASTODON_ORIGIN` | Instance base URL (no trailing slash), e.g. `https://mastodon.social` |
+| `MASTODON_CLIENT_ID` / `MASTODON_CLIENT_SECRET` | From your registered OAuth application |
+
+Never commit **`.env`** or real secrets.
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build (when available) |
+| `npm run check` | Type-check / Svelte check (when available) |
+
+## Contributing
+
+Issues and pull requests are welcome on [GitHub](https://github.com/shahzebqazi/mastodon-client).

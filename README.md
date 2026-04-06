@@ -1,6 +1,6 @@
 # mastodon-client
 
-Public **Mastodon** web client, built with **Cursor** locally and **Cursor Cloud Agents** as the primary implementer. GitHub is the source of truth.
+**Mastodon** web client, built with and **Cursor Cloud Agents** as the primary implementer. GitHub is the source of truth.
 
 ## How this repo is meant to work
 
